@@ -1,0 +1,43 @@
+<html>
+<script src="http://js.pusherapp.com/1.6/pusher.min.js"></script>
+<body>
+
+<script type="text/javascript">
+Pusher.log = function() {
+   alert("hi")
+   if (window.console) {
+      window.console.log.apply(window.console, arguments);
+   }
+};
+
+//app_id = '2694'
+//key = 'e353af7c93d473330c25'
+//secret = '27a3fae1764b0e8f0617'
+
+
+var pusher = new Pusher('e353af7c93d473330c25');
+var myChannel = pusher.subscribe('MY_CHANNEL');
+
+
+
+myChannel.bind('purhcase', function(thing) {
+  alert('A thing was created: ' + thing.name);
+});
+
+
+
+var socket = new Pusher('e353af7c93d473330c25', 'MY_CHANNEL');
+socket.bind('purhcase',
+  function(data) {
+    alert("hello?")
+  }
+);
+
+
+alert("ready")
+
+</script>
+
+
+</body>
+</html>

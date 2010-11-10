@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+
+<script type="text/javascript" src="jquery-1.4.3.js"></script>
+<script type="text/javascript" src="jquery.tmpl.js"></script>
+<script type="text/javascript" src="rx.js"></script>
+<script type="text/javascript" src="linq.js"></script>
+<script type="text/javascript" src="client.js"></script>
+
+<script id="player-tmpl" type="text/x-jquery-tmpl">
+   hello, ${playerName} <br />
+   <div id="points${index}"></div>
+</script>
+
+<script id="points-tmpl" type="text/x-jquery-tmpl">
+   points: ${points} <br />
+   ${winner}
+</script>
+
+<script id="card-tmpl" type="text/x-jquery-tmpl">
+   <img src="cards/${suit}${value}.png"></img>
+</script>
+
+
+<body>
+<div>
+   <table border="1">
+   <tr id="game" valign="top">
+      <td id="player0" bgcolor="white"></td>
+      <td id="player1" bgcolor="white"></td>
+      <td id="player2" bgcolor="white"></td>
+      <td id="player3" bgcolor="white"></td>
+      <td id="player4" bgcolor="white"></td>
+   </tr>
+   </table>
+</div>
+<input type="button" value="test" onclick="test()"></input>
+
+</body>
+</html>

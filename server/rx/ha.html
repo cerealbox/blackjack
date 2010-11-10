@@ -1,0 +1,56 @@
+<html><body>
+
+<script type="text/javascript" src="ES5.js"></script>
+<script type="text/javascript" src="rx.js"></script>
+<script type="text/javascript">
+
+   function add(x, y, cont) {
+   //function add(cont, y, x) {
+      cont(null, x + y)
+   }
+   
+   
+   Function.prototype.arguments = function() {
+      var definition = this.toString();
+
+      return /^.*?\((.*?)\)/gi.exec(definition)[1].split(",").map(function(arg) { return arg.trim() });
+   };
+   Function.prototype.toObservable = function() {
+      var that = this;
+      var args = [];
+      args.push(null);
+      for(var cnt = 0; cnt < arguments.length;cnt++) {
+         args.push(arguments[cnt]);
+      }
+      return Rx.Observable.Create(function(observer) {
+         var cancelled = false
+         // that.bind(null, x, y);
+         var func = Function.prototype.bind.apply(that, args);
+         func(function(err, value) {
+
+            if (!cancelled) {
+               if (arguments.length > 2) {
+                  value = [];
+                  for(var cnt = 1; cnt < arguments.length; cnt++) {
+                     value.push(arguments[cnt]);
+                  }
+                  value.length = arguments.length -1;
+               }
+               if (err) {
+                  observer.OnError(err);
+               }
+               else {
+                  observer.OnNext(value);
+                  observer.OnCompleted();
+               }
+            }
+         });
+
+         return function() { cancelled = true }
+      });
+   };
+
+   add.toObservable(2,3).Subscribe(function(value) { alert(value) })
+</script>
+
+</body></html>
